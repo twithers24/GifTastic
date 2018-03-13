@@ -1,0 +1,48 @@
+.background{
+    background-color: #0f0f0f;
+}
+.header{
+    width: 100%;
+    height: 80px;
+    background-color: black;
+
+}
+
+h1{
+    float: left;
+    margin-left: 20%;
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 36px;
+    color: white;
+}
+
+#inputForm{
+    float: right;
+}
+
+#buttons {
+    align-content: center;
+}
+
+.searchBar{
+    height: 50px;
+    width: 600px;
+    margin-top: 12px;
+  
+}
+
+#search{
+    margin-right: 275px;
+    height: 56px;
+    background: url(../images/glass.gif);
+    background-size: 256px 256px;
+}
+
+.motion{
+    width: 250px;
+    height: 250px;
+}
+
+.gifArea{
+    width: 80%;
+}

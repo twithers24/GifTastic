@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="javascript/app.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">    
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>GIF Search</title>
+</head>
+<body class="background">
+<div class="header">    
+<h1>GIF SEARCH</h1>
+<form id="inputForm">
+    <input type="text" id="userInput" class="searchBar">
+    <input id="search" type="submit" value="Submit" class="submitButton">
+</form>
+</div>
+<center><ul id="buttons"></ul></center>
+<center><div id="gifs" class="gifArea"></div></center>
+
+<script>
+    //This is the array that holds the button value
+var icons = [ "Michael Jackson", "Michael Jordon", "Muhammad Ali", "Lebron James", "Jay-Z", "The Beatles", "2-Pac", "The Black Panther", "Bruno Mars", "Kevin Hart", "Notorious BIG", "Dave Chapelle"];
+//function to create a button
+function createBttn() {
+    $("#buttons").empty();
+    for(var i = 0; i<icons.length; i++){
+        var gifButton = $("<button>");
+        gifButton.addClass("icon");
+        gifButton.attr("data-name", icons[i]);
+        gifButton.text(icons[i]);
+        $("#buttons").append(gifButton);  
+    }
+};
+//code that executes search and 
+function gifSearch() {
+    $("#search").on("click", function(event) {
+    event.preventDefault();
+    var icon = $("#userInput").val().trim();
+    $("#userInput").val("");
+    icons.push(icon);
+    createBttn();
+});
+};
+
+createBttn();
+gifSearch();
+
+
+$("button").on("click", function() {
+ $("#gifs").empty();  
+ var name = $(this).attr("data-name");  
+ var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + name + "&api_key=bkJzReGjzp4fY7a1McQYtAnhobtO6m2x&limit=16";  
+ $.ajax({
+   url: queryURL,
+   method: "GET"
+ })
+.then(function(response) {
+   var results = response.data;
+   for (var i = 0; i < results.length; i++) {
+    console.log(queryURL);
+    console.log(response);
+     var iconImage = $("<img>");
+     iconImage.addClass("motion");
+     iconImage.attr("src", results[i].images.fixed_height.url);
+  $("#gifs").append(iconImage);
+    }
+ });
+});
+
+$(".image").on("click", function() {
+var state = $(this).attr("data-state");
+if (state === "still") {
+$(this).attr("src", $(this).attr("data-animate"));
+$(this).attr("data-state", "animate");
+} else {
+$(this).attr("src", $(this).attr("data-still"));
+$(this).attr("data-state", "still");
+}
+
+});
+
+</script>
+</body>
+</html>
